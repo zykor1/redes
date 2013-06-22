@@ -1,0 +1,12 @@
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 20%;
+    background: rgb(24, 33, 61);
+    color: #fff;
+}
+.header {
+    margin: 40% 2em 0;
+    text-align: left;
+}
