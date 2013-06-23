@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+{% block tittle %}Inicio de sesión {% endblock %}
+{% block contenido %}
+
+<section id="Login">
+    <section id="services-login-desktop" class="visible-desktop">
+        <br>
+        <h1 class="header" id="titulo">Inicio de sesion</h1>
+        <p class="header" id="subtitulo">Buro de Solvencia Moral.</p>
+    </section>
+
+    <section id="services-login-mobile" class="hidden-desktop">
+        <br>
+        <h1 class="header" id="titulo">Inicio de sesion</h1>
+        <p class="header" id="subtitulo">Buro de Solvencia Moral.</p>
+    </section> 
+
+
+	<div class="row">
+		<div class="container" id="full">
+		{% if user.is_authenticated %}
+			<p>Hola, {{ user.username }}. Si deseas cerrar tu sesion has clic <a href="/logout">aqui</a></p>
+		{% else %}
+			{% if form.errors %}
+				<div class="alert alert-info">
+  					<button type="button" class="close" data-dismiss="alert">&times;</button>
+  					<strong>Informacion incorrecta. </strong> El nombre de usuario o contraseña son incorrectos.
+				</div>
+			{% endif %}
+
+			<form class="span4 offset3" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+			{% csrf_token %}
+			<table>
+			<tr>
+			    <td>{{ form.username.label_tag }}</td>
+			    <td><input id="id_username" maxlength="254" name="username" type="text" placeholder="Nombre de usuario"> </td>
+			</tr>
+			<tr>
+			    <td>{{ form.password.label_tag }}</td>
+			    <td><input id="id_password" name="password" type="password" placeholder="Contraseña"></td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="next" value="{{ next }}" /></td>
+				<td><input class="btn btn-large pull-right" type="submit" value="login" /></td>
+			</tr>
+			</table>
+
+
+			</form>
+		{% endif %}
+		</div>
+	</div>
+</section> 
+
+
+
+
+
+
+{% endblock %}
+
