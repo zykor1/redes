@@ -8,9 +8,10 @@ urlpatterns = patterns('',
 	 url(r'', include('social_auth.urls')),
     # Examples:
     url(r'^$', 'usuarios.views.index', name='home'),
+    url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'usuarios/login.html'}),
     url(r'^logeado/$', 'usuarios.views.logeado', name='Logeado'),
-        url(r'^cerrar/$', 'usuarios.views.cerrar'),
-    
+    url(r'^cerrar/$', 'usuarios.views.cerrar'),
+    url(r'^registro/$', 'usuarios.views.nuevoUserView'), # agregar nuevo usuario
     # url(r'^redeSociales/', include('redeSociales.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

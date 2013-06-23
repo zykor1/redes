@@ -15,8 +15,8 @@ class UserField(forms.EmailField):
             return value
 
 class SignupForm(forms.Form):
-    first_name = forms.CharField(max_length=30, label=_(u"Empresa"))
-    last_name = forms.CharField(max_length=30, label=_(u"Nombre completo"))
+    first_name = forms.CharField(max_length=30, label=_(u"Nombre la empresa"))
+    last_name = forms.CharField(max_length=70, label=_(u"Nombre completo del encargado"))
     email = UserField(label=_(u"Email"))
     password = forms.CharField(widget=forms.PasswordInput(), label=_(u"Contraseña"))
     password2 = forms.CharField(widget=forms.PasswordInput(), label=_(u"Repita contraseña"))
