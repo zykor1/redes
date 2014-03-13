@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, include, url
+
 from django.conf import settings
+from django.conf.urls.defaults import *
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -12,6 +13,7 @@ urlpatterns = patterns('',
     url(r'^logeado/$', 'usuarios.views.logeado', name='Logeado'),
     url(r'^cerrar/$', 'usuarios.views.cerrar'),
     url(r'^registro/$', 'usuarios.views.nuevoUserView'), # agregar nuevo usuario
+    url(r'^login-error/$', 'usuarios.views.error_login'),
     # url(r'^redeSociales/', include('redeSociales.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

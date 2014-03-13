@@ -16,11 +16,11 @@ RUTA_PROYECTO = os.path.dirname(os.path.realpath(__file__))
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'redes',                      # Or path to database file if using sqlite3.
-        'USER': 'viewor',                      # Not used with sqlite3.
-        'PASSWORD': 'viewor_12',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
@@ -100,6 +100,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -123,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'social_auth',
     'usuarios',
+    'debug_toolbar',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -137,15 +140,9 @@ INSTALLED_APPS = (
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
     'handlers': {
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
         }
     },
@@ -158,10 +155,23 @@ LOGGING = {
     }
 }
 
+# Configuracion DJANGO DEBUG TOOLBAR
+INTERNAL_IPS = ('127.0.0.1',)
+DEBUG_TOOLBAR_CONFIG = {
+  'INTERCEPT_REDIRECTS': False,
+}
+
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_auth.backends.pipeline.social.social_auth_user',
+    'social_auth.backends.pipeline.social.associate_user',
+    'social_auth.backends.pipeline.social.load_extra_data',
+)
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -169,6 +179,9 @@ TWITTER_CONSUMER_KEY         = 'BRdqcpPEe5C9NZZ7ZEZ05Q'
 TWITTER_CONSUMER_SECRET      = 'eGrPixqmidtZpLCzNdUB96zVht8xrRLoiNLnJ2aZsbQ'
 FACEBOOK_APP_ID              = '188980267933208'
 FACEBOOK_API_SECRET          = '5bc9b759bf791f7eb213e49d2d4ab28d'
+
+GOOGLE_OAUTH2_CLIENT_ID      = '156687870178.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = 'EfwPolT8ry4lCt7PfTrpUtSJ'
 
 
 LOGIN_URL          = '/login-form/'
@@ -183,3 +196,7 @@ FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'es_LA'}
 
 TWITTER_EXTRA_DATA = [('profile_image_url', 'profile_image_url')]
+
+
+GOOGLE_WHITE_LISTED_EMAILS = ['enrique.wx@gmail.com']
+

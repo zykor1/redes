@@ -9,7 +9,11 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from forms import SignupForm
 from django.contrib.auth.models import User
+import json
 
+
+def  error_login(request):
+	return HttpResponseRedirect('/logeado')
 
 def  index(request):
 	return render_to_response('index.html',  context_instance=RequestContext(request))
@@ -19,7 +23,12 @@ def  logeado(request):
 	if request.user.social_auth.filter(provider='twitter').count() > 0:
 		getImg = request.user.social_auth.get(provider='twitter').extra_data['profile_image_url']
 		return render_to_response('logeado.html', {'imagen': getImg }, context_instance=RequestContext(request))
-	return render_to_response('logeado.html',  context_instance=RequestContext(request))
+	try:
+		datos_google = request.user.social_auth.get(provider='google-oauth2')
+		access_token = datos_google.extra_data['access_token']
+	except Exception as error:
+		return render_to_response('logeado.html', context_instance=RequestContext(request))
+	return render_to_response('logeado.html', {'datos_google': datos_google, 'access_token': access_token}, context_instance=RequestContext(request))
 
 
 @login_required(login_url='/')

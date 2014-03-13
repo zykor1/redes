@@ -1,7 +1,7 @@
 {% extends 'base/base.html' %}
 {% block tittle %}Logeado {% endblock %}
 
-{% block contenido %} 
+{% block contenido %}
 <div class"pure-g-r" id="layout">
 	<div class="sidebar pure-u">
 		<header class="header pure-u-1">
@@ -12,13 +12,24 @@
 					<img src='{{ imagen }}'>
 				{% endif %}
 			</div>
-			<h1 class="brand-title">{{ user.first_name }}</h1>				
+			{% for message in messages %}
+    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+			<h1 class="brand-title">{{ user.first_name }}</h1>
+			{% if datos_google %}
+				<p>Token google: {{ access_token }}</p>
+				<p>datos_google: {{ datos_google }}</p>
+				<p>directo extra data: {{ user.social_auth.all.0.extra_data.access_token }}</p>
+				<p>directo extra data: {{ user.social_auth.all.0.extra_data }}</p>
+				<p>directo datos completos: {{ user.social_auth.all.0 }}</p>
+			{% else %}
+				<a class="pure-button" href='{% url socialauth_begin "google-oauth2" %}'>google</a>
+			{% endif%}
 			<a class="pure-button pure-button-primary" href='/cerrar'>Cerrar sesion</a>
-			
 		</header>
 	</div>
 </div>
-{% endblock %} 
+{% endblock %}
 
 
 
