@@ -116,6 +116,16 @@ TEMPLATE_DIRS = (
 )
 
 
+# CONFIGURACION MONGODB
+MONGO_USER = 'zykor'
+MONGO_PWD = 'zykor'
+MONGO_DB = 'mydb'
+MONGO_HOST = 'localhost'
+#MONGO_HOST = '10.181.23.241'
+MONGO_PORT = ''
+
+
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -164,8 +174,13 @@ DEBUG_TOOLBAR_CONFIG = {
 
 SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.social.social_auth_user',
+    #'social_auth.backends.pipeline.associate.associate_by_email',
+    'social_auth.backends.pipeline.user.get_username',
+    'social_auth.backends.pipeline.user.create_user',
     'social_auth.backends.pipeline.social.associate_user',
     'social_auth.backends.pipeline.social.load_extra_data',
+    #'social_auth.backends.pipeline.user.update_user_details',
+    'usuarios.pipelines.guardar_mongo'
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -198,5 +213,4 @@ FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'es_LA'}
 TWITTER_EXTRA_DATA = [('profile_image_url', 'profile_image_url')]
 
 
-GOOGLE_WHITE_LISTED_EMAILS = ['enrique.wx@gmail.com']
 
