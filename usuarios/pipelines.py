@@ -5,6 +5,11 @@ from django.core.files.base import ContentFile
 from mongodb.mongodb import MongoDB
 import requests
 
+
+# guardamos en mongo, usuamos upser para insertar en caso de que no exista
+# el usuario y en caso de que exista solo lo actualizamos, se valida por medio
+# del id de usuario que envia google, upser se encuentra dentro de
+# mongodb/mongodb.upser
 def guardar_mongo(backend, details, response, social_user, uid,\
                   user, *args, **kwargs):
     if backend.name == "google-oauth2":
